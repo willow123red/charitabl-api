@@ -7,12 +7,12 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 const app = express();
+const db = require("./db")
+const queries = require("./db/queries");
 
-const db = require("./db");
-
-const charities = require("./routes/charities");
-const users = require("./routes/users");
-const donations = require("./routes/donations");
+const charities = require("./routes/charities")(queries);
+const users = require("./routes/users")(queries);
+const donations = require("./routes/donations")(queries);
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -36,9 +36,9 @@ module.exports = function application(
   app.use(helmet());
   app.use(bodyparser.json());
 
-  app.use("/api", charities(db));
-  app.use("/api", users(db));
-  app.use("/api", donations(db));
+  app.use("/api", charities);
+  app.use("/api", users);
+  app.use("/api", donations);
 
   if (ENV === "test") {
     Promise.all([

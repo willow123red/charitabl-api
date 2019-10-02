@@ -1,13 +1,8 @@
 const router = require("express").Router();
 
-
-module.exports = db => {
+module.exports = queries => {
   router.get("/donations", (request, response) => {
-    db.query(
-      `
-      SELECT * FROM donations
-      `
-    ).then(({ rows: donations }) => {
+    queries.getAllDonations().then(donations => {
       response.json(donations);
     });
   });
