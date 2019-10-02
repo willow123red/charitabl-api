@@ -6,7 +6,7 @@ CREATE TABLE users (
   city VARCHAR(255) NOT NULL,
   province VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE charities (
@@ -18,7 +18,7 @@ CREATE TABLE charities (
   short_description VARCHAR(255) NOT NULL,
   long_description TEXT,
   qr_img_url VARCHAR(255),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE employees (
@@ -34,5 +34,5 @@ CREATE TABLE donations (
   user_id INTEGER REFERENCES users(id),
   charity_id INTEGER REFERENCES charities(id),
   employee_id INTEGER REFERENCES employees(id),
-  donated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  donated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
