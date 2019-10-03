@@ -8,7 +8,7 @@ const cors = require("cors");
 
 const app = express();
 const db = require("./db")
-const queries = require("./db/queries");
+const queries = require("./db/queries")(db);
 
 const charities = require("./routes/charities")(queries);
 const users = require("./routes/users")(queries);
@@ -29,12 +29,22 @@ function read(file) {
   });
 }
 
+const setLoggedInUser = (request, response, next) => {
+  request.user = {
+    id: 1,
+    email: 'test@test.com'
+  }
+  next();
+}
+
 module.exports = function application(
   ENV,
 ) {
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());
+
+  app.use(setLoggedInUser)
 
   app.use("/api", charities);
   app.use("/api", users);

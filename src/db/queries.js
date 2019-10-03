@@ -23,23 +23,43 @@ module.exports = db => ({
     `
   ).then(({ rows: charities }) => charities),
 
-  getDonationsByUser: () => db.query(
+  getDonationsByUser: (userId) => db.query(
     `
     SELECT
       users.id AS users_id,
       charities.name AS charity_name,
-      donations.donations_cents,
+      donations.amount_cents,
       donations.donated_at
-    FROM users,
-         donations,
-         charities
+    FROM  users,
+          donations,
+          charities
     WHERE donations.user_id = users.id
-    AND 
-    charities.id = donations.charity_id
-    ORDER BY users.id,
-             donations.donated_at;
-    `
+    AND charities.id = donations.charity_id
+    AND users.id = $1
+    ORDER BY  users.id,
+              donations.donated_at;
+    `, [userId]
   ).then(({ rows: users }) => users),
 
+  getDonationsByCharity: (charityId) => db.query(
+    `
+    SELECT
+      donations.id AS donations_id,
+      users.first_name AS first_name,
+      users.last_name AS last_name,
+      charities.id AS charity_id,
+      donations.amount_cents,
+      donations.donated_at
+    FROM  users,
+          charities,
+          donations
+    WHERE donations.user_id = users.id
+    AND charities.id = donations.charity_id
+    AND charities.id = $1
+    ORDER BY donations.donated_at;  
+    `, [charityId]
+  ).then(({ rows: donations }) => donations)
 
-})
+
+
+});
