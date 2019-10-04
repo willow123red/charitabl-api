@@ -63,7 +63,7 @@ module.exports = db => ({
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *;
     `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email]
-  ).then(({ rows: users }) => users
+  ).then(({ rows: users }) => users[0]
   ).catch(error => console.log(error)),
 
   // Donations, queries, etc to database

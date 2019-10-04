@@ -9,18 +9,17 @@ module.exports = queries => {
     .catch(error => console.log(error));
   });
 
-  router.get("/user/:id", (request, response) => {
-    queries.getDonationsByUser(request.user.id).then(donations => {
-      response.json(donations);
+  router.put("/signup", (request, response) => {
+    console.log("request.body", request.body)
+    queries.createNewUser(request.body).then((user) => {
+        response.status(200).json(user);
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log("EEEError", error));
   });
 
-  router.put("/users/new", (request, response) => {
-    queries.createNewUser(request.body.user).then(() => {
-      setTimeout(() => {
-        response.status(204).json({});
-      }, 1000);
+  router.get("/users/:id", (request, response) => {
+    queries.getDonationsByUser(request.user.id).then(donations => {
+      response.json(donations);
     })
     .catch(error => console.log(error));
   });
