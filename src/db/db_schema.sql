@@ -18,6 +18,7 @@ CREATE TABLE charities (
   short_description VARCHAR(255) NOT NULL,
   long_description TEXT,
   qr_img_url VARCHAR(255),
+  logo VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
