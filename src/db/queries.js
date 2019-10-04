@@ -74,7 +74,7 @@ module.exports = db => ({
     VALUES ($1, $2, $3, $4)
     RETURNING *; 
     `,[donation.amount_cents, donation.user_id, donation.charity_id, donation.employee_id]
-  ).then(({ rows: donations }) => donations
+  ).then(({ rows: donations }) => donations[0]
   ).catch(error => console.log(error)),
 
   getAllDonations: () => db.query(

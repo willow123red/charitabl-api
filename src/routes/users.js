@@ -10,7 +10,6 @@ module.exports = queries => {
   });
 
   router.put("/signup", (request, response) => {
-    console.log("request.body", request.body)
     queries.createNewUser(request.body).then((user) => {
         response.status(200).json(user);
     })
@@ -25,10 +24,8 @@ module.exports = queries => {
   });
 
   router.put("/users/:id/charities/:id/:donation_amount", (request, response) => {
-    queries.makeUserDonation(request.body.donation).then(() => {
-      setTimeout(() => {
-        response.status(204).json({});
-      }, 1000);
+    queries.makeUserDonation(request.body).then(() => {
+        response.status(200).json(donation);
     })
     .catch(error => console.log(error));
   });
