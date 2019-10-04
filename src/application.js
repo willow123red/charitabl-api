@@ -53,7 +53,7 @@ module.exports = function application(
   if (ENV === "test") {
     Promise.all([
       read(path.resolve(__dirname, `db/db_schema.sql`)),
-      read(path.resolve(__dirname, `db/${ENV}.sql`))
+      read(path.resolve(__dirname, `db/test.sql`))
     ])
       .then(([create, seed]) => {
         app.get("/api/debug/reset", (request, response) => {
