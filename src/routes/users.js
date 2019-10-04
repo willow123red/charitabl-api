@@ -23,7 +23,7 @@ module.exports = queries => {
     .catch(error => console.log(error));
   });
 
-  router.put("/users/:id/charities/:id/:donation_amount", (request, response) => {
+  router.put("/users/:id/charities/:id/:donationAmount", (request, response) => {
     queries.makeUserDonation(request.body).then(() => {
         response.status(200).json(donation);
     })
