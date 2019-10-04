@@ -16,7 +16,7 @@ module.exports = queries => {
     .catch(error => console.log("EEEError", error));
   });
 
-  router.get("/users/:id", (request, response) => {
+  router.get("/users/:id/donations", (request, response) => {
     queries.getDonationsByUser(request.user.id).then(donations => {
       response.json(donations);
     })
