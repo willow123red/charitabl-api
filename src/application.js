@@ -50,7 +50,7 @@ module.exports = function application(
   app.use("/api", users);
   app.use("/api", donations);
 
-  if (ENV === "test") {
+  if (ENV === "development") {
     Promise.all([
       read(path.resolve(__dirname, `db/db_schema.sql`)),
       read(path.resolve(__dirname, `db/test.sql`))

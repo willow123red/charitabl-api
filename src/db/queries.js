@@ -40,7 +40,8 @@ module.exports = db => ({
     `
     SELECT
       users.id AS users_id,
-      charities.name AS charity_name,
+      charities.name,
+      charities.logo,
       donations.amount_cents,
       donations.donated_at
     FROM  users,

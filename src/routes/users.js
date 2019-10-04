@@ -8,10 +8,10 @@ module.exports = queries => {
     })
     .catch(error => console.log(error));
   });
-  
-  router.get("/users/:id", (request, response) => {
-    queries.getDonationsByUser(request.user.id).then(users => {
-      response.json(users);
+
+  router.get("/user/:id", (request, response) => {
+    queries.getDonationsByUser(request.user.id).then(donations => {
+      response.json(donations);
     })
     .catch(error => console.log(error));
   });
