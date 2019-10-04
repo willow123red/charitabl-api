@@ -10,9 +10,9 @@ module.exports = db => ({
   getAllCharitiesSpecificInfo: (charityId) => db.query(
     `
     SELECT
-      charities.id AS charityId,
-      charities.shortDescription AS shortDescription,
-      charities.longDescription AS longDescription,
+      charities.id AS charity_id,
+      charities.short_description AS short_description,
+      charities.long_description AS long_description,
       charities.logo AS logo
     FROM
       charities
@@ -39,19 +39,19 @@ module.exports = db => ({
   getDonationsByUser: (userId) => db.query(
     `
     SELECT
-      users.id AS usersId,
+      users.id AS users_id,
       charities.name,
       charities.logo,
-      donations.amountCents,
-      donations.donatedAt
+      donations.amount_cents,
+      donations.donated_at
     FROM  users,
           donations,
           charities
-    WHERE donations.userId = users.id
-    AND charities.id = donations.charityId
+    WHERE donations.user_id = users.id
+    AND charities.id = donations.charity_id
     AND users.id = $1
     ORDER BY  users.id,
-              donations.donatedAt;
+              donations.donated_at;
     `, [userId]
   ).then(({ rows: users }) => users
   ).catch(error => console.log(error)),
@@ -59,10 +59,10 @@ module.exports = db => ({
   createNewUser: (user) => db.query(
     `
     INSERT INTO users
-    (firstName, lastName, address, city, province, email)
+    (first_name, last_name, address, city, province, email)
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *;
-    `,[user.firstName, user.lastName, user.address, user.city, user.province, user.email]
+    `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email]
   ).then(({ rows: users }) => users[0]
   ).catch(error => console.log(error)),
 
@@ -70,10 +70,10 @@ module.exports = db => ({
   makeUserDonation: (donation) => db.query(
     `
     INSERT INTO donations
-    (amountCents, userId, charityId, employeeId)
+    (amount_cents, user_id, charity_id, employee_id)
     VALUES ($1, $2, $3, $4)
     RETURNING *; 
-    `,[donation.amountCents, donation.userId, donation.charityId, donation.employeeId]
+    `,[donation.amount_cents, donation.user_id, donation.charity_id, donation.employee_id]
   ).then(({ rows: donations }) => donations[0]
   ).catch(error => console.log(error)),
 
@@ -88,18 +88,18 @@ module.exports = db => ({
     `
     SELECT
       donations.id AS donations_id,
-      users.firstName AS firstName,
-      users.lastName AS lastName,
-      charities.id AS charityId,
-      donations.amountCents,
-      donations.donatedAt
+      users.first_name AS first_name,
+      users.last_name AS last_name,
+      charities.id AS charity_id,
+      donations.amount_cents,
+      donations.donated_at
     FROM  users,
           charities,
           donations
-    WHERE donations.userId = users.id
-    AND charities.id = donations.charityId
+    WHERE donations.user_id = users.id
+    AND charities.id = donations.charity_id
     AND charities.id = $1
-    ORDER BY donations.donatedAt;  
+    ORDER BY donations.donated_at;  
     `, [charityId]
   ).then(({ rows: donations }) => donations
   ).catch(error => console.log(error))
