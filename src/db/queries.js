@@ -37,13 +37,13 @@ module.exports = db => ({
   ).then(({ rows: users }) => users
   ).catch(error => console.log(error)),
 
-  loginUser: (email, password) => db.query(
+  loginUser: (user) => db.query(
     `
     SELECT * FROM
       users
     WHERE users.email = $1
     AND users.password = $2
-    `,[email, password]
+    `,[user.email, user.password]
   ).then(({ rows: users }) => users
   ).catch(error => console.log(error)),
 

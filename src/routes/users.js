@@ -16,8 +16,9 @@ module.exports = queries => {
     .catch(error => console.log(error));
   });
 
-  router.get("/login", (request, response) => {
-    queries.loginUser(request.query.email, request.query.password).then((user) => {
+  router.put("/login", (request, response) => {
+    console.log(request.body, "request.body")
+    queries.loginUser(request.body).then((user) => {
      console.log("user in /login", user)
       response.json(user);
     })
