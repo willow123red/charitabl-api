@@ -28,6 +28,7 @@ module.exports = db => ({
   ).then(({ rows: charities }) => charities
   ).catch(error => console.log(error)),
 
+
   // Users, queries, etc to database
   getAllUsers: () => db.query(
     `
@@ -36,6 +37,29 @@ module.exports = db => ({
   ).then(({ rows: users }) => users
   ).catch(error => console.log(error)),
 
+  loginUser: (email, password) => db.query(
+    `
+    SELECT
+      users.email,
+      users.password
+    FROM
+      users
+    WHERE users.email = $1
+    AND users.password = $2
+    `,[email, password]
+  ).then(({ rows: users }) => users
+  ).catch(error => console.log(error)),
+
+  createNewUser: (user) => db.query(
+    `
+    INSERT INTO users
+    (first_name, last_name, address, city, province, email)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *;
+    `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email]
+  ).then(({ rows: users }) => users[0]
+  ).catch(error => console.log(error)),
+  
   getDonationsByUser: (userId) => db.query(
     `
     SELECT
@@ -56,15 +80,6 @@ module.exports = db => ({
   ).then(({ rows: users }) => users
   ).catch(error => console.log(error)),
 
-  createNewUser: (user) => db.query(
-    `
-    INSERT INTO users
-    (first_name, last_name, address, city, province, email)
-    VALUES ($1, $2, $3, $4, $5, $6)
-    RETURNING *;
-    `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email]
-  ).then(({ rows: users }) => users[0]
-  ).catch(error => console.log(error)),
 
   // Donations, queries, etc to database
   makeUserDonation: (donation) => db.query(

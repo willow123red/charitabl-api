@@ -11,9 +11,16 @@ module.exports = queries => {
 
   router.put("/signup", (request, response) => {
     queries.createNewUser(request.body).then((user) => {
-        response.status(200).json(user);
+      response.status(200).json(user);
     })
-    .catch(error => console.log("EEEError", error));
+    .catch(error => console.log(error));
+  });
+
+  router.get("/login", (request, response) => {
+    queries.loginUser(request.body).then((user) => {
+      response.status(200).json(user);
+    })
+    .catch(error => console.log(error));
   });
 
   router.get("/users/:id/donations", (request, response) => {
