@@ -50,10 +50,10 @@ module.exports = db => ({
   createNewUser: (user) => db.query(
     `
     INSERT INTO users
-    (first_name, last_name, address, city, province, email)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    (first_name, last_name, address, city, province, email, password)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING *;
-    `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email]
+    `,[user.first_name, user.last_name, user.address, user.city, user.province, user.email, user.password]
   ).then(({ rows: users }) => users[0]
   ).catch(error => console.log(error)),
   
