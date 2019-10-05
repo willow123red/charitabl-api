@@ -39,10 +39,7 @@ module.exports = db => ({
 
   loginUser: (email, password) => db.query(
     `
-    SELECT
-      users.email,
-      users.password
-    FROM
+    SELECT * FROM
       users
     WHERE users.email = $1
     AND users.password = $2

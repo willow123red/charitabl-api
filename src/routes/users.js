@@ -17,8 +17,10 @@ module.exports = queries => {
   });
 
   router.get("/login", (request, response) => {
-    queries.loginUser(request.body).then((user) => {
-      response.status(200).json(user);
+    console.log("djfijsdbfjn", request.user);
+    queries.loginUser(request.user).then((user) => {
+     console.log("98595465680", user)
+      response.json(user);
     })
     .catch(error => console.log(error));
   });
