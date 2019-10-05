@@ -29,13 +29,13 @@ function read(file) {
   });
 }
 
-const setLoggedInUser = (request, response, next) => {
+/* const setLoggedInUser = (request, response, next) => {
   request.user = {
     id: 1,
     email: 'test@test.com'
   }
   next();
-}
+} */
 
 module.exports = function application(
   ENV,
@@ -44,7 +44,7 @@ module.exports = function application(
   app.use(helmet());
   app.use(bodyparser.json());
 
-  app.use(setLoggedInUser)
+  //app.use(setLoggedInUser)
 
   app.use("/api", charities);
   app.use("/api", users);

@@ -17,16 +17,16 @@ module.exports = queries => {
   });
 
   router.get("/login", (request, response) => {
-    console.log("djfijsdbfjn", request.user);
-    queries.loginUser(request.user).then((user) => {
-     console.log("98595465680", user)
+    queries.loginUser(request.query.email, request.query.password).then((user) => {
+     console.log("user in /login", user)
       response.json(user);
     })
     .catch(error => console.log(error));
   });
 
   router.get("/users/:id/donations", (request, response) => {
-    queries.getDonationsByUser(request.user.id).then(donations => {
+    console.log(request.params, "request.params in GET /users/:id/donations")
+    queries.getDonationsByUser(request.params.id).then(donations => {
       response.json(donations);
     })
     .catch(error => console.log(error));
