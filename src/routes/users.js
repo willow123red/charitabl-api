@@ -20,7 +20,7 @@ module.exports = queries => {
     console.log(request.body, "request.body")
     queries.loginUser(request.body).then((user) => {
      console.log("user in /login", user)
-      response.json(user);
+      response.status(200).json(user);
     })
     .catch(error => console.log(error));
   });
