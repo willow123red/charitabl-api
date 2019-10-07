@@ -1,20 +1,22 @@
 const router = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-module.exports = () => {
+module.exports = queries => {
   router.post("/payment", async (request, response) => {
+    console.log(request.body, "request.body in payments.js")
+    console.log(request.params, "request.params in payments.js")
     try {
-      let {
-        status
-      } = await stripe.charges.create({
-        amount: 2000,
+      let strp = await stripe.charges.create({
+        amount: request.body.amount,
+        name: request.body.charity.name,
         currency: "cad",
-        description: "An example charge",
-        source: request.body
+        description: request.body.charity.short_description,
+        source: request.body.token.id
       });
+      console.log(strp, "strp in payments.js")
 
       response.json({
-        status
+        status: strp.status
       });
     } catch (error) {
       console.log(error);

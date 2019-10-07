@@ -13,7 +13,7 @@ const queries = require("./db/queries")(db);
 const charities = require("./routes/charities")(queries);
 const users = require("./routes/users")(queries);
 const donations = require("./routes/donations")(queries);
-const payments = require("./routes/payments");
+const payments = require("./routes/payments")(queries);
 
 function read(file) {
   return new Promise((resolve, reject) => {
