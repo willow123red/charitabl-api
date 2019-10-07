@@ -7,6 +7,6 @@ module.exports = queries => {
       response.json(donations);
     });
   });
-
+  
   return router;
 };

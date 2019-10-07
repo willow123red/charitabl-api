@@ -13,6 +13,7 @@ const queries = require("./db/queries")(db);
 const charities = require("./routes/charities")(queries);
 const users = require("./routes/users")(queries);
 const donations = require("./routes/donations")(queries);
+const payments = require("./routes/payments");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -29,26 +30,18 @@ function read(file) {
   });
 }
 
-/* const setLoggedInUser = (request, response, next) => {
-  request.user = {
-    id: 1,
-    email: 'test@test.com'
-  }
-  next();
-} */
-
 module.exports = function application(
   ENV,
 ) {
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());
-
-  //app.use(setLoggedInUser)
+  app.use(bodyparser.text());
 
   app.use("/api", charities);
   app.use("/api", users);
   app.use("/api", donations);
+  app.use("/api", payments);
 
   if (ENV === "development") {
     Promise.all([
