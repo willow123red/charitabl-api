@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 const app = express();
-const db = require("./db")
+const db = require("./db");
 const queries = require("./db/queries")(db);
 
 const charities = require("./routes/charities")(queries);
