@@ -13,7 +13,6 @@ const queries = require("./db/queries")(db);
 const charities = require("./routes/charities")(queries);
 const users = require("./routes/users")(queries);
 const donations = require("./routes/donations")(queries);
-const payments = require("./routes/payments")(queries);
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -41,7 +40,6 @@ module.exports = function application(
   app.use("/api", charities);
   app.use("/api", users);
   app.use("/api", donations);
-  app.use("/api", payments);
 
   if (ENV === "development") {
     Promise.all([
