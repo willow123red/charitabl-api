@@ -38,8 +38,8 @@ CREATE TABLE employees (
 CREATE TABLE donations (
   id SERIAL PRIMARY KEY NOT NULL,
   amount_cents INTEGER NOT NULL,
-  user_id INTEGER REFERENCES users(id),
-  charity_id INTEGER REFERENCES charities(id),
+  user_id INTEGER REFERENCES users(id) NOT NULL,
+  charity_id INTEGER REFERENCES charities(id) NOT NULL,
   employee_id INTEGER REFERENCES employees(id),
   donated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
