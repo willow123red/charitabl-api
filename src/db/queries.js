@@ -25,7 +25,7 @@ module.exports = db => ({
     `
     SELECT * FROM charities WHERE id = ${id}
     `
-  ).then(({ rows: charities }) => charities
+  ).then(({ rows: charities }) => charities[0]
   ).catch(error => console.log(error)),
 
 
@@ -79,15 +79,30 @@ module.exports = db => ({
 
 
   // Donations, queries, etc to database
-  makeUserDonation: (donation) => db.query(
-    `
-    INSERT INTO donations
-    (amount_cents, user_id, charity_id, employee_id)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *; 
-    `,[donation.amount, donation.user_id, donation.charity.id, 1]
-  ).then(({ rows: donations }) => donations[0]
-  ).catch(error => console.log(error)),
+  makeUserDonation: async function(donation) {
+    const that = this;
+    try {
+      const result = await db.query(
+      `
+        INSERT INTO donations
+        (amount_cents, user_id, charity_id, employee_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *; 
+      `,[donation.amount, donation.user_id, donation.charity.id, 1]
+      )
+
+      const newDonation = result.rows[0];
+      console.log("Doneation", newDonation)
+      const charity = await that.getCharityById(newDonation.charity_id);
+      console.log("charity", charity)
+      newDonation.logo = charity.logo;
+      newDonation.name = charity.name;
+      return newDonation;
+      
+    } catch(error) {
+      console.log(error)
+    }
+  },
 
   getAllDonations: () => db.query(
     `
