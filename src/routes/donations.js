@@ -25,13 +25,6 @@ module.exports = queries => {
       });
   });
 
-  // router.put("donations/users/:id/charities/:id/:donationAmount", (request, response) => {
-  //   queries.makeUserDonation(request.body).then(() => {
-  //       response.status(200).json(donation);
-  //     })
-  //     .catch(error => console.log(error));
-  // });
-
   router.get("/donations", (request, response) => {
     queries.getAllDonations().then(donations => {
         response.json(donations);

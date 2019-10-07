@@ -92,9 +92,7 @@ module.exports = db => ({
       )
 
       const newDonation = result.rows[0];
-      console.log("Doneation", newDonation)
       const charity = await that.getCharityById(newDonation.charity_id);
-      console.log("charity", charity)
       newDonation.logo = charity.logo;
       newDonation.name = charity.name;
       return newDonation;
