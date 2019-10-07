@@ -8,9 +8,8 @@ module.exports = queries => {
     try {
       let strp = await stripe.charges.create({
         amount: request.body.amount,
-        name: request.body.charity.name,
         currency: "cad",
-        description: request.body.charity.short_description,
+        description: request.body.charity.name,
         source: request.body.token.id
       });
       console.log(strp, "strp in payments.js")
