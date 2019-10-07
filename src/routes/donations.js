@@ -5,21 +5,24 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 module.exports = queries => {
 
   router.post("/donation", async (request, response) => {
-    let strp = await stripe.charges.create({
+    await stripe.charges.create({
         amount: request.body.amount,
         currency: "cad",
         description: request.body.charity.name,
         source: request.body.token.id
-      }).then(() => {
-        response.json({
-          status: strp.status
-        }).status(500).end();
-      }).then(() => {
+      })
+      .then(({ status }) => {
         queries.makeUserDonation(request.body).then((donation) => {
-          response.status(200).json(donation);
+          response.status(200).json({ status, donation });
+        }).catch(error => {
+          console.log(error)
+          response.status(500).end("DB error");
         })
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error)
+        response.status(500).end("Stripe Error");
+      });
   });
 
   // router.put("donations/users/:id/charities/:id/:donationAmount", (request, response) => {
