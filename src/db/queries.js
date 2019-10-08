@@ -3,6 +3,7 @@ module.exports = db => ({
   getAllCharities: () => db.query(
     `
     SELECT * FROM charities
+    ORDER BY charities.name
     `
   ).then(({ rows: charities }) => charities
   ).catch(error => console.log(error)),

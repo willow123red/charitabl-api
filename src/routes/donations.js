@@ -16,7 +16,7 @@ module.exports = queries => {
           response.status(200).json({ status, donation });
         }).catch(error => {
           console.log(error)
-          response.status(500).end("DB error");
+          response.status(500).end("DB Error");
         })
       })
       .catch(error => {
