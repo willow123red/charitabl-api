@@ -7,6 +7,16 @@ module.exports = db => ({
   ).then(({ rows: charities }) => charities
   ).catch(error => console.log(error)),
 
+  loginCharity: (charity) => db.query(
+    `
+    SELECT * FROM
+      charities
+    WHERE charities.email = $1
+    AND charities.password = $2
+    `,[charity.email, charity.password]
+  ).then(({ rows: users }) => users
+  ).catch(error => console.log(error)),
+
   getAllCharitiesSpecificInfo: (charityId) => db.query(
     `
     SELECT
