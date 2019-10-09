@@ -48,6 +48,6 @@ Use the browser to navigate to http://localhost:8001/api/debug/reset.
 
 You will need to obtain your own api keys from Stripe to make a donation in the development environment.
 
-Visit https://stripe.com/docs/keys and sign up for your developer keys. You will need the both publishable and secret key. Use the .env.example file to update the .env.development file accordingly.
+Visit https://stripe.com/docs/keys and sign up for your developer keys. You will need both the publishable and secret key. Use the .env.example file to update the .env.development file accordingly.
 
 You can use credit card number 4242 4242 4242 4242 with any post dated expiry date and ccv combination to test.
